@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLYWASH Express® — Higienização de Estofados nos EUA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #06101d;
+  --deep:   #091828;
+  --mid:    #0e2340;
+  --steel:  #1a3558;
+  --accent: #2a7ab5;
+  --accent2: #1e5f8a;
+  --gold:   #c8a96e;
+  --gold2:  #e8c88a;
+  --rule:   rgba(255,255,255,0.09);
+  --muted:  rgba(255,255,255,0.38);
+  --soft:   rgba(255,255,255,0.65);
+  --white:  #ffffff;
+  --cream:  #f4f0eb;
+  --balloon: rgba(42,122,181,0.18);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--ink);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ══ NOISE ══ */
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.022;
+}
+
+/* ══ FLOATING BALLOON SYSTEM ══ */
+.balloon-float {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  animation: balloonRise 18s ease-in-out infinite;
+}
+.balloon-float svg { filter: drop-shadow(0 4px 16px rgba(42,122,181,0.25)); }
+
+@keyframes balloonRise {
+  0%   { opacity:0; transform: translateY(0) rotate(-3deg); }
+  8%   { opacity:1; }
+  50%  { transform: translateY(-55px) rotate(3deg); }
+  92%  { opacity:1; }
+  100% { opacity:0; transform: translateY(-120px) rotate(-2deg); }
+}
+
+/* ══ NAV ══ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:300;
+  padding: 24px 64px;
+  display: flex; align-items:center; justify-content:space-between;
+  transition: all .4s ease;
+}
+nav.scrolled {
+  padding: 14px 64px;
+  background: rgba(6,16,29,0.94);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.logo-icon {
+  position: relative; width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center;
+}
+.logo-icon svg { width:36px; height:36px; }
+.logo-wordmark { display:flex; flex-direction:column; gap:0; }
+.logo-name {
+  font-family: 'Montserrat'; font-weight:700; font-size:16px;
+  letter-spacing:5px; text-transform:uppercase; color:var(--white);
+  display:flex; align-items:center; gap:3px;
+}
+.logo-name .wash-part { color: var(--accent); }
+.logo-name sup { font-size:7px; opacity:0.55; font-weight:400; letter-spacing:0; margin-top:-4px; }
+.logo-sub { font-size:8.5px; letter-spacing:4px; text-transform:uppercase; color:var(--muted); }
+
+.nav-links { display:flex; gap:40px; }
+.nav-links a {
+  font-size:10.5px; letter-spacing:3px; text-transform:uppercase;
+  font-weight:500; color:var(--muted); text-decoration:none;
+  transition: color .25s; position:relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px;
+  background:var(--accent); transform:scaleX(0); transition:transform .3s;
+}
+.nav-links a:hover { color:var(--white); }
+.nav-links a:hover::after { transform:scaleX(1); }
+
+.nav-cta {
+  font-size:10.5px; letter-spacing:3px; text-transform:uppercase;
+  font-weight:600; color:var(--white); text-decoration:none;
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 11px 26px; transition: all .3s;
+}
+.nav-cta:hover { background:var(--white); color:var(--ink); }
+
+/* ══ HERO ══ */
+#hero {
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+  background: linear-gradient(160deg, #040d19 0%, #071422 45%, #0c1e38 100%);
+  padding: 120px 72px 80px;
+  text-align:center;
+}
+
+/* Sofa background image (SVG inline representation with blue tones) */
+.hero-sofa-bg {
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background: radial-gradient(ellipse 70% 50% at 50% 80%, rgba(14,35,64,0.7) 0%, transparent 70%);
+}
+.hero-sofa-illustration {
+  position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+  z-index:1; pointer-events:none; opacity:0.13;
+  width:min(700px, 90vw);
+}
+
+.hero-grid-l { position:absolute; left:64px; top:0; bottom:0; width:1px; background:linear-gradient(180deg,transparent,rgba(255,255,255,0.055) 30%,rgba(255,255,255,0.055) 70%,transparent); }
+.hero-grid-r { position:absolute; right:64px; top:0; bottom:0; width:1px; background:linear-gradient(180deg,transparent,rgba(255,255,255,0.055) 30%,rgba(255,255,255,0.055) 70%,transparent); }
+.hero-grid-t { position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent); }
+.hero-grid-b { position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent); }
+
+.hero-content { position:relative; z-index:2; }
+
+.hero-eyebrow {
+  font-size:10px; letter-spacing:6px; text-transform:uppercase;
+  color:var(--muted); font-weight:500; margin-bottom:44px;
+  display:flex; align-items:center; gap:18px;
+  animation: fadeUp .9s ease both;
+}
+.hero-eyebrow::before,.hero-eyebrow::after { content:''; width:40px; height:1px; background:rgba(255,255,255,0.18); }
+
+.hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:300; font-size:clamp(50px,6.2vw,86px);
+  line-height:1.07; letter-spacing:-1px;
+  margin-bottom:30px; max-width:880px;
+  animation: fadeUp .9s ease .12s both;
+}
+.hero-title em { font-style:italic; color:rgba(255,255,255,0.5); }
+.hero-title strong { font-weight:600; }
+
+.hero-sub {
+  font-size:14px; letter-spacing:.5px; line-height:1.95;
+  color:var(--soft); max-width:500px; margin:0 auto 56px;
+  font-weight:300;
+  animation: fadeUp .9s ease .24s both;
+}
+
+.hero-actions {
+  display:flex; gap:20px; align-items:center; justify-content:center;
+  animation: fadeUp .9s ease .36s both;
+}
+.btn-primary {
+  font-size:11px; letter-spacing:4px; text-transform:uppercase;
+  font-weight:600; color:var(--white); text-decoration:none;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  padding:17px 48px; transition:all .35s; display:inline-block;
+  box-shadow: 0 8px 32px rgba(42,122,181,0.35);
+  position:relative; overflow:hidden;
+}
+.btn-primary::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+  opacity:0; transition:opacity .3s;
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow: 0 14px 48px rgba(42,122,181,0.5); }
+.btn-primary:hover::before { opacity:1; }
+.btn-outline {
+  font-size:11px; letter-spacing:4px; text-transform:uppercase;
+  font-weight:600; color:var(--white); text-decoration:none;
+  border:1px solid rgba(255,255,255,0.25); padding:17px 48px;
+  transition:all .3s; display:inline-block;
+}
+.btn-outline:hover { background:var(--white); color:var(--ink); }
+
+.hero-scroll {
+  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  animation: fadeUp .9s ease .8s both;
+}
+.hero-scroll span { font-size:8.5px; letter-spacing:4px; text-transform:uppercase; color:var(--muted); }
+.scroll-line { width:1px; height:44px; background:linear-gradient(180deg,rgba(255,255,255,0.28),transparent); animation:scrollPulse 2s ease-in-out infinite; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+@keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }
+
+/* ══ SECTION COMMONS ══ */
+.section-label {
+  font-size:10px; letter-spacing:5px; text-transform:uppercase;
+  color:var(--muted); font-weight:500; margin-bottom:56px;
+  display:flex; align-items:center; gap:14px;
+}
+.section-label::before { content:''; width:22px; height:1px; background:var(--muted); }
+
+/* scroll reveal */
+.reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity:1; transform:none; }
+.reveal-delay-1 { transition-delay:.12s; }
+.reveal-delay-2 { transition-delay:.24s; }
+.reveal-delay-3 { transition-delay:.36s; }
+.reveal-delay-4 { transition-delay:.48s; }
+
+/* ══ MANIFESTO ══ */
+#manifesto {
+  padding:120px 72px;
+  background:var(--cream);
+  position:relative; overflow:hidden;
+}
+.manifesto-inner {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 2fr; gap:96px; align-items:start;
+}
+.manifesto-label {
+  font-size:10px; letter-spacing:5px; text-transform:uppercase;
+  color:#999; font-weight:500; padding-top:8px;
+  position:sticky; top:120px;
+}
+.manifesto-label::before { content:''; display:block; width:22px; height:1px; background:#999; margin-bottom:14px; }
+.manifesto-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(26px,2.8vw,40px); line-height:1.5;
+  font-weight:300; color:var(--ink); letter-spacing:-.2px;
+}
+.manifesto-text strong { font-weight:600; }
+.manifesto-text em { font-style:italic; color:#666; }
+/* subtle balloon watermark on cream */
+#manifesto::after {
+  content:''; position:absolute; right:-60px; bottom:40px;
+  width:260px; height:260px;
+  background: radial-gradient(circle, rgba(42,122,181,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+/* ══ CIDADES ══ */
+#cidades {
+  padding:120px 72px;
+  background:var(--deep);
+  position:relative; overflow:hidden;
+}
+
+.cities-grid {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--rule); margin-bottom:72px;
+}
+.city-card {
+  background:var(--deep); padding:52px 44px 44px;
+  position:relative; overflow:hidden;
+  cursor:default; transition:background .35s;
+}
+.city-card:hover { background:var(--mid); }
+.city-card:hover .city-balloon { opacity:0.7; transform:translateY(-8px); }
+.city-card:hover .city-name { color:var(--white); }
+
+.city-balloon {
+  display:block; margin:0 auto 20px;
+  opacity:0.5; transition: opacity .4s, transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+.city-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:12px; color:var(--muted); font-weight:300; letter-spacing:2px;
+  margin-bottom:12px;
+}
+.city-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(24px,2.2vw,32px); font-weight:300;
+  color:rgba(255,255,255,0.82); letter-spacing:-.5px;
+  transition:color .3s; margin-bottom:8px;
+}
+.city-state {
+  font-size:10.5px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--muted); font-weight:400;
+}
+.city-badge {
+  display:inline-block; margin-top:16px;
+  font-size:8.5px; letter-spacing:3px; text-transform:uppercase;
+  font-weight:600; padding:5px 14px;
+  border:1px solid var(--rule); color:var(--muted);
+}
+.city-badge.active {
+  border-color:rgba(42,122,181,0.35);
+  color:var(--accent); background:rgba(42,122,181,0.07);
+}
+.city-badge.new-city {
+  border-color:rgba(200,169,110,0.4);
+  color:var(--gold); background:rgba(200,169,110,0.06);
+}
+
+/* Em breve block */
+.cities-soon {
+  max-width:1100px; margin:0 auto;
+  padding:44px 0 0;
+  border-top:1px solid var(--rule);
+}
+.soon-label {
+  font-size:9px; letter-spacing:5px; text-transform:uppercase;
+  color:var(--muted); display:flex; align-items:center; gap:12px; margin-bottom:28px;
+}
+.soon-label::before { content:''; width:16px; height:1px; background:var(--muted); display:inline-block; }
+.soon-cities {
+  display:flex; gap:52px; flex-wrap:wrap;
+}
+.soon-city {
+  display:flex; flex-direction:column; align-items:flex-start; gap:6px;
+}
+.soon-city-balloon { opacity:0.25; }
+.soon-city-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(20px,1.8vw,26px); font-weight:300;
+  color:rgba(255,255,255,0.28); letter-spacing:-.3px;
+}
+.soon-city-tag {
+  font-size:9px; letter-spacing:3px; text-transform:uppercase;
+  color:rgba(255,255,255,0.2); font-weight:400;
+}
+
+/* ══ SERVIÇOS ══ */
+#servicos {
+  padding:120px 72px;
+  background:var(--cream);
+  position:relative; overflow:hidden;
+}
+.servicos-grid {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:rgba(0,0,0,0.09);
+}
+.servico-item {
+  background:var(--cream); padding:54px 44px;
+  transition:background .3s;
+}
+.servico-item:hover { background:#ece8e2; }
+.servico-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:12px; color:#aaa; font-weight:300; letter-spacing:3px; margin-bottom:28px;
+}
+.servico-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px; font-weight:400; color:var(--ink);
+  line-height:1.2; margin-bottom:14px; letter-spacing:-.2px;
+}
+.servico-desc { font-size:12.5px; color:#777; line-height:1.85; font-weight:300; }
+
+/* ══ DIFERENCIAIS ══ */
+#diferenciais {
+  padding:120px 72px;
+  background:var(--ink);
+  position:relative; overflow:hidden;
+}
+.dif-grid {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--rule);
+}
+.dif-item {
+  background:var(--ink); padding:52px 40px;
+  transition:background .35s;
+}
+.dif-item:hover { background:var(--mid); }
+.dif-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:12px; color:var(--muted); font-weight:300; letter-spacing:3px; margin-bottom:28px;
+}
+.dif-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px; font-weight:400; color:rgba(255,255,255,0.9);
+  margin-bottom:12px; letter-spacing:-.2px; line-height:1.25;
+}
+.dif-desc { font-size:12.5px; color:var(--muted); line-height:1.85; font-weight:300; }
+
+/* ══ PROCESSO ══ */
+#processo {
+  padding:120px 72px;
+  background:var(--deep);
+  position:relative; overflow:hidden;
+}
+.processo-inner { max-width:680px; margin:0 auto; }
+.processo-step {
+  display:grid; grid-template-columns:28px 1fr;
+  gap:32px; padding:36px 0;
+  border-bottom:1px solid var(--rule);
+  align-items:start;
+}
+.processo-step:first-of-type { padding-top:0; }
+.step-n {
+  font-family:'Cormorant Garamond',serif;
+  font-size:12px; color:var(--muted); padding-top:4px;
+}
+.step-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px; font-weight:400; color:var(--white);
+  margin-bottom:8px; letter-spacing:-.2px;
+}
+.step-desc { font-size:12.5px; color:var(--muted); line-height:1.85; font-weight:300; }
+
+/* ══ PAGAMENTO ══ */
+#pagamento {
+  padding:120px 72px;
+  background:var(--ink);
+  position:relative; overflow:hidden;
+}
+.pagamento-inner { max-width:1100px; margin:0 auto; }
+.pagamento-header {
+  display:grid; grid-template-columns:1fr 1fr; gap:80px;
+  margin-bottom:64px; align-items:end;
+}
+.pagamento-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,3.2vw,50px); font-weight:300; line-height:1.15; letter-spacing:-.5px;
+}
+.pagamento-title em { font-style:italic; color:rgba(255,255,255,0.5); }
+.pagamento-sub { font-size:12.5px; color:var(--muted); line-height:1.85; font-weight:300; }
+.payment-row {
+  display:grid; grid-template-columns:repeat(6,1fr); gap:1px;
+  background:var(--rule);
+}
+.pay-item {
+  background:var(--ink); padding:38px 24px;
+  transition:background .3s; position:relative;
+}
+.pay-item:hover { background:var(--mid); }
+.pay-pop-tag {
+  position:absolute; top:14px; left:50%; transform:translateX(-50%);
+  font-size:7.5px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--gold); font-weight:600; white-space:nowrap;
+}
+.pay-line { width:28px; height:1px; background:var(--accent); margin:34px auto 20px; opacity:0.6; }
+.pay-label {
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px; font-weight:400; color:var(--white);
+  text-align:center; margin-bottom:8px;
+}
+.pay-desc { font-size:11px; color:var(--muted); text-align:center; line-height:1.6; }
+
+/* ══ DEPOIMENTOS ══ */
+#saudade {
+  padding:120px 72px;
+  background:var(--deep);
+  position:relative; overflow:hidden;
+}
+.saudade-inner {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr; gap:96px; align-items:start;
+}
+.saudade-quote {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(28px,3vw,42px); font-weight:300; line-height:1.4;
+  margin-bottom:28px; letter-spacing:-.3px;
+}
+.saudade-quote em { font-style:italic; color:rgba(255,255,255,0.48); }
+.saudade-text { font-size:13px; color:var(--muted); line-height:1.9; font-weight:300; }
+.testimonials { display:flex; flex-direction:column; gap:0; }
+.testi {
+  padding:28px 0; border-bottom:1px solid var(--rule);
+}
+.testi:first-child { border-top:1px solid var(--rule); }
+.testi-text {
+  font-size:13.5px; color:var(--soft); line-height:1.8; font-weight:300;
+  font-style:italic; margin-bottom:12px;
+}
+.testi-author { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--muted); }
+
+/* ══ CTA FINAL ══ */
+#contato {
+  padding:140px 72px;
+  background:var(--ink);
+  text-align:center; position:relative; overflow:hidden;
+}
+.cta-rule {
+  width:1px; height:72px;
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,0.18));
+  margin:0 auto 64px;
+}
+.cta-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(40px,5vw,72px); font-weight:300; line-height:1.1;
+  letter-spacing:-1px; margin-bottom:24px; max-width:800px; margin-left:auto; margin-right:auto;
+}
+.cta-title em { font-style:italic; color:rgba(255,255,255,0.45); }
+.cta-sub {
+  font-size:14px; color:var(--muted); line-height:1.85; font-weight:300;
+  max-width:440px; margin:0 auto 56px;
+}
+
+/* city list in footer CTA */
+.cta-cities {
+  display:flex; flex-wrap:wrap; gap:28px; justify-content:center;
+  margin-bottom:60px; align-items:flex-end;
+}
+.cta-city-block {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.cta-city-balloon { opacity:0.55; transition:opacity .3s, transform .4s cubic-bezier(.34,1.56,.64,1); }
+.cta-city-block:hover .cta-city-balloon { opacity:1; transform:translateY(-6px); }
+.cta-city-name {
+  font-size:11px; letter-spacing:3.5px; text-transform:uppercase;
+  font-weight:500; color:rgba(255,255,255,0.7);
+}
+.cta-city-name.highlight { color:var(--white); font-weight:600; }
+.cta-city-soon {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  opacity:0.32;
+}
+.cta-city-soon .cta-city-name { color:rgba(255,255,255,0.5); font-weight:400; }
+.cta-soon-tag { font-size:8px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); }
+
+/* ══ FOOTER ══ */
+footer {
+  background:var(--ink);
+  padding:48px 72px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-top:1px solid var(--rule);
+}
+.footer-logo { font-family:'Montserrat'; font-weight:700; font-size:15px; letter-spacing:5px; text-transform:uppercase; }
+.footer-logo span { color:var(--accent); }
+.footer-copy { font-size:10px; color:var(--muted); letter-spacing:1px; }
+.footer-flags { font-size:10px; color:var(--muted); letter-spacing:2px; }
+
+/* ══ BALLOON SVG REUSABLE ══ */
+
+/* ══ RESPONSIVE ══ */
+@media (max-width:1024px) {
+  nav { padding: 20px 32px; }
+  nav.scrolled { padding: 12px 32px; }
+  #hero { padding:120px 32px 80px; }
+  #manifesto,#cidades,#servicos,#diferenciais,#processo,#pagamento,#saudade,#contato { padding:80px 32px; }
+  .manifesto-inner,.saudade-inner,.pagamento-header { grid-template-columns:1fr; gap:40px; }
+  .cities-grid,.servicos-grid,.dif-grid { grid-template-columns:1fr 1fr; }
+  .payment-row { grid-template-columns:repeat(3,1fr); }
+  .nav-links { display:none; }
+  footer { flex-direction:column; gap:16px; text-align:center; }
+}
+@media (max-width:640px) {
+  .cities-grid,.servicos-grid,.dif-grid { grid-template-columns:1fr; }
+  .payment-row { grid-template-columns:repeat(2,1fr); }
+  .cta-cities { gap:20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <div class="logo-icon"><img src="data:image/png;base64,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" style="width:44px;height:auto;display:block;" alt="FlyWash Logo"></div>
+    
+  </a>
+  <nav class="nav-links">
+    <a href="#cidades">Cidades</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#processo">Como funciona</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <a href="https://wa.me/19971086308" class="nav-cta">Solicitar orçamento</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-t"></div>
+  <div class="hero-grid-b"></div>
+  <div class="hero-grid-l"></div>
+  <div class="hero-grid-r"></div>
+
+  <!-- Sofa background real image -->
+  <div class="hero-sofa-bg"></div>
+  <div class="hero-sofa-illustration" aria-hidden="true" style="opacity:0.18;display:flex;align-items:flex-end;justify-content:center;">
+    <img src="data:image/png;base64,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" style="width:min(680px,88vw);height:auto;object-fit:contain;filter:brightness(0.7) saturate(0.5) hue-rotate(180deg);" alt="">
+  </div>
+  <div style="display:none">
+  </div>
+
+  <!-- Floating balloons scattered -->
+  
+  <!-- Big realistic balloon bunch - left -->
+  <div style="position:absolute;left:2%;top:8%;z-index:1;pointer-events:none;opacity:0.55;animation:balloonRise 20s ease-in-out infinite;animation-delay:2s;">
+    <svg width="160" height="240" viewBox="0 0 160 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg_b1" cx="35%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.85)"/>
+      <stop offset="18%" stop-color="#4a9ee8"/>
+      <stop offset="60%" stop-color="#1a5fa0"/>
+      <stop offset="100%" stop-color="#0a2d52"/>
+    </radialGradient>
+    <radialGradient id="rg_b2" cx="35%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.8)"/>
+      <stop offset="20%" stop-color="#3588d6"/>
+      <stop offset="62%" stop-color="#1049820"/>
+      <stop offset="100%" stop-color="#082445"/>
+    </radialGradient>
+    <radialGradient id="rg_b3" cx="35%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.75)"/>
+      <stop offset="22%" stop-color="#5aadf0"/>
+      <stop offset="65%" stop-color="#1d6cb5"/>
+      <stop offset="100%" stop-color="#0d3460"/>
+    </radialGradient>
+    <filter id="bshadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+  <!-- Back balloons (darker) -->
+  <ellipse cx="28" cy="52" rx="18" ry="22" fill="url(#rg_b2)" opacity="0.75"/>
+  <ellipse cx="92" cy="48" rx="16" ry="20" fill="url(#rg_b2)" opacity="0.7"/>
+  <!-- Middle balloons -->
+  <ellipse cx="52" cy="36" rx="21" ry="26" fill="url(#rg_b3)" opacity="0.88"/>
+  <ellipse cx="76" cy="38" rx="19" ry="24" fill="url(#rg_b1)" opacity="0.85"/>
+  <!-- Front balloon (most prominent) -->
+  <ellipse cx="60" cy="26" rx="22" ry="27" fill="url(#rg_b1)"/>
+  <!-- Highlights -->
+  <ellipse cx="52" cy="16" rx="6" ry="4" fill="rgba(255,255,255,0.38)"/>
+  <ellipse cx="50" cy="13" rx="2.5" ry="1.8" fill="rgba(255,255,255,0.6)"/>
+  <ellipse cx="74" cy="27" rx="5" ry="3.5" fill="rgba(255,255,255,0.28)"/>
+  <ellipse cx="45" cy="26" rx="4.5" ry="3" fill="rgba(255,255,255,0.25)"/>
+  <!-- Strings -->
+  <path d="M60,53 Q58,70 55,80 Q52,95 56,238" stroke="rgba(255,255,255,0.35)" stroke-width="0.9" fill="none"/>
+  <path d="M76,62 Q74,72 72,82 Q70,92 68,238" stroke="rgba(255,255,255,0.28)" stroke-width="0.8" fill="none"/>
+  <path d="M52,62 Q50,72 48,82 Q46,92 48,238" stroke="rgba(255,255,255,0.28)" stroke-width="0.8" fill="none"/>
+  <path d="M28,74 Q30,84 32,94 Q34,104 40,238" stroke="rgba(255,255,255,0.2)" stroke-width="0.7" fill="none"/>
+  <path d="M92,68 Q88,78 84,88 Q80,98 76,238" stroke="rgba(255,255,255,0.2)" stroke-width="0.7" fill="none"/>
+  <!-- Knots -->
+  <circle cx="60" cy="53" r="2.5" fill="#0d3460" opacity="0.9"/>
+  <circle cx="76" cy="62" r="2" fill="#0d3460" opacity="0.85"/>
+  <circle cx="52" cy="62" r="2" fill="#0d3460" opacity="0.85"/>
+</svg>
+  </div>
+  <!-- Big realistic balloon bunch - right -->
+  <div style="position:absolute;right:3%;top:12%;z-index:1;pointer-events:none;opacity:0.45;animation:balloonRise 24s ease-in-out infinite;animation-delay:7s;transform:scaleX(-1);">
+    <svg width="130" height="200" viewBox="0 0 130 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg_b1" cx="35%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.85)"/>
+      <stop offset="18%" stop-color="#4a9ee8"/>
+      <stop offset="60%" stop-color="#1a5fa0"/>
+      <stop offset="100%" stop-color="#0a2d52"/>
+    </radialGradient>
+    <radialGradient id="rg_b2" cx="35%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.8)"/>
+      <stop offset="20%" stop-color="#3588d6"/>
+      <stop offset="62%" stop-color="#1049820"/>
+      <stop offset="100%" stop-color="#082445"/>
+    </radialGradient>
+    <radialGradient id="rg_b3" cx="35%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.75)"/>
+      <stop offset="22%" stop-color="#5aadf0"/>
+      <stop offset="65%" stop-color="#1d6cb5"/>
+      <stop offset="100%" stop-color="#0d3460"/>
+    </radialGradient>
+    <filter id="bshadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+  <!-- Back balloons (darker) -->
+  <ellipse cx="28" cy="52" rx="18" ry="22" fill="url(#rg_b2)" opacity="0.75"/>
+  <ellipse cx="92" cy="48" rx="16" ry="20" fill="url(#rg_b2)" opacity="0.7"/>
+  <!-- Middle balloons -->
+  <ellipse cx="52" cy="36" rx="21" ry="26" fill="url(#rg_b3)" opacity="0.88"/>
+  <ellipse cx="76" cy="38" rx="19" ry="24" fill="url(#rg_b1)" opacity="0.85"/>
+  <!-- Front balloon (most prominent) -->
+  <ellipse cx="60" cy="26" rx="22" ry="27" fill="url(#rg_b1)"/>
+  <!-- Highlights -->
+  <ellipse cx="52" cy="16" rx="6" ry="4" fill="rgba(255,255,255,0.38)"/>
+  <ellipse cx="50" cy="13" rx="2.5" ry="1.8" fill="rgba(255,255,255,0.6)"/>
+  <ellipse cx="74" cy="27" rx="5" ry="3.5" fill="rgba(255,255,255,0.28)"/>
+  <ellipse cx="45" cy="26" rx="4.5" ry="3" fill="rgba(255,255,255,0.25)"/>
+  <!-- Strings -->
+  <path d="M60,53 Q58,70 55,80 Q52,95 56,198" stroke="rgba(255,255,255,0.35)" stroke-width="0.9" fill="none"/>
+  <path d="M76,62 Q74,72 72,82 Q70,92 68,198" stroke="rgba(255,255,255,0.28)" stroke-width="0.8" fill="none"/>
+  <path d="M52,62 Q50,72 48,82 Q46,92 48,198" stroke="rgba(255,255,255,0.28)" stroke-width="0.8" fill="none"/>
+  <path d="M28,74 Q30,84 32,94 Q34,104 40,198" stroke="rgba(255,255,255,0.2)" stroke-width="0.7" fill="none"/>
+  <path d="M92,68 Q88,78 84,88 Q80,98 76,198" stroke="rgba(255,255,255,0.2)" stroke-width="0.7" fill="none"/>
+  <!-- Knots -->
+  <circle cx="60" cy="53" r="2.5" fill="#0d3460" opacity="0.9"/>
+  <circle cx="76" cy="62" r="2" fill="#0d3460" opacity="0.85"/>
+  <circle cx="52" cy="62" r="2" fill="#0d3460" opacity="0.85"/>
+</svg>
+  </div>
+<div class="balloon-float" style="left:8%;top:25%;animation-delay:0s;animation-duration:16s;">
+    <svg width="28" height="42" viewBox="0 0 28 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3220" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#3a8fd4" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5fa0" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3220" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="14.0" cy="35.4" rx="6.006" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3220)"/>
+  <!-- balloon body -->
+  <ellipse cx="14.0" cy="16.7" rx="10.92" ry="14.7" fill="url(#rg3220)"/>
+  <!-- specular highlight -->
+  <ellipse cx="12.0344" cy="12.584" rx="2.4024" ry="2.2049999999999996" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="10.5056" cy="10.526" rx="1.092" ry="1.0290000000000001" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M12.0,31.4 Q14.0,36.4 16.0,31.4 Q15.0,34.4 13.0,34.4 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M14.0,35.4 Q10.0,37.699999999999996 16.0,40.64 Q19.0,43.16 14.0,41" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+  </div>
+  <div class="balloon-float" style="right:10%;top:30%;animation-delay:5s;animation-duration:20s;">
+    <svg width="22" height="34" viewBox="0 0 22 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg2540" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#3a8fd4" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5fa0" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg2540" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="11.0" cy="29.799999999999997" rx="4.719" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg2540)"/>
+  <!-- balloon body -->
+  <ellipse cx="11.0" cy="13.899999999999999" rx="8.58" ry="11.899999999999999" fill="url(#rg2540)"/>
+  <!-- specular highlight -->
+  <ellipse cx="9.4556" cy="10.567999999999998" rx="1.8876" ry="1.7849999999999997" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="8.2544" cy="8.902" rx="0.8580000000000001" ry="0.833" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M9.0,25.799999999999997 Q11.0,30.799999999999997 13.0,25.799999999999997 Q12.0,28.799999999999997 10.0,28.799999999999997 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M11.0,29.799999999999997 Q7.0,30.9 13.0,33.28 Q16.0,35.32 11.0,33" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+  </div>
+  <div class="balloon-float" style="left:18%;top:60%;animation-delay:10s;animation-duration:22s;">
+    <svg width="20" height="30" viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg2300" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#3a8fd4" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5fa0" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg2300" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="10.0" cy="27.0" rx="4.290000000000001" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg2300)"/>
+  <!-- balloon body -->
+  <ellipse cx="10.0" cy="12.5" rx="7.800000000000001" ry="10.5" fill="url(#rg2300)"/>
+  <!-- specular highlight -->
+  <ellipse cx="8.596" cy="9.559999999999999" rx="1.7160000000000002" ry="1.575" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="7.504" cy="8.09" rx="0.7800000000000001" ry="0.7350000000000001" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M8.0,23.0 Q10.0,28.0 12.0,23.0 Q11.0,26.0 9.0,26.0 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M10.0,27.0 Q6.0,27.5 12.0,29.6 Q15.0,31.4 10.0,29" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+  </div>
+  <div class="balloon-float" style="right:20%;top:55%;animation-delay:3s;animation-duration:19s;">
+    <svg width="26" height="38" viewBox="0 0 26 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg2980" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#3a8fd4" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5fa0" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg2980" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="13.0" cy="32.599999999999994" rx="5.577000000000001" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg2980)"/>
+  <!-- balloon body -->
+  <ellipse cx="13.0" cy="15.299999999999999" rx="10.14" ry="13.299999999999999" fill="url(#rg2980)"/>
+  <!-- specular highlight -->
+  <ellipse cx="11.1748" cy="11.575999999999999" rx="2.2308000000000003" ry="1.9949999999999997" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="9.7552" cy="9.713999999999999" rx="1.014" ry="0.931" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M11.0,28.599999999999998 Q13.0,33.599999999999994 15.0,28.599999999999998 Q14.0,31.599999999999998 12.0,31.599999999999998 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M13.0,32.599999999999994 Q9.0,34.3 15.0,36.959999999999994 Q18.0,39.239999999999995 13.0,37" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Higienização de Estofados nos Estados Unidos</div>
+    <h1 class="hero-title">
+      A referência brasileira<br>
+      em higienização de estofados<br>
+      <em>agora também atende</em><br>
+      nos <strong>Estados Unidos</strong>
+    </h1>
+    <p class="hero-sub">
+      Conectamos brasileiros nos EUA a profissionais de confiança — que entendem sua cultura, falam sua língua e entregam o padrão de qualidade que você sempre valorizou.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/19971086308" class="btn-primary">Falar pelo WhatsApp</a>
+      <a href="#cidades" class="btn-outline">Ver cidades</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section id="manifesto">
+  <!-- subtle balloon watermark -->
+  <div style="position:absolute;right:5%;top:50%;transform:translateY(-50%);opacity:0.04;pointer-events:none;">
+    <svg width="220" height="260" viewBox="0 0 220 260" fill="none"><ellipse cx="110" cy="90" rx="70" ry="86" fill="#2a7ab5"/><ellipse cx="55" cy="120" rx="50" ry="62" fill="#2a7ab5"/><ellipse cx="165" cy="120" rx="50" ry="62" fill="#2a7ab5"/><line x1="110" y1="176" x2="110" y2="255" stroke="#2a7ab5" stroke-width="3"/><line x1="55" y1="182" x2="110" y2="255" stroke="#2a7ab5" stroke-width="2"/><line x1="165" y1="182" x2="110" y2="255" stroke="#2a7ab5" stroke-width="2"/></svg>
+  </div>
+  <div class="manifesto-inner">
+    <div class="manifesto-label reveal">Nossa proposta</div>
+    <div class="manifesto-text reveal reveal-delay-1">
+      Na FLYWASH, acreditamos que mudar de país não significa abrir mão do <strong>padrão de qualidade</strong>, conforto e confiança que você sempre valorizou. Conectamos brasileiros nos Estados Unidos a profissionais de confiança, que entendem sua cultura, falam sua língua e entregam o nível de qualidade que você espera.<br><br>
+      <em>De brasileiro para brasileiro.</em> Nossa proposta é simples: oferecer serviços confiáveis, atendimento humanizado e a segurança de saber que sua casa está em boas mãos.
+    </div>
+  </div>
+</section>
+
+<!-- CIDADES -->
+<section id="cidades">
+  <!-- Subtle background balloon pattern -->
+  <div style="position:absolute;left:-40px;bottom:60px;opacity:0.04;pointer-events:none;">
+    <svg width="180" height="210" viewBox="0 0 180 210" fill="none"><ellipse cx="90" cy="72" rx="58" ry="70" fill="#2a7ab5"/><ellipse cx="42" cy="100" rx="40" ry="50" fill="#2a7ab5"/><ellipse cx="138" cy="100" rx="40" ry="50" fill="#2a7ab5"/><line x1="90" y1="142" x2="90" y2="205" stroke="#2a7ab5" stroke-width="3"/></svg>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label reveal">Onde atuamos</div>
+  </div>
+
+  <div class="cities-grid reveal reveal-delay-1">
+    <!-- Dallas -->
+    <div class="city-card">
+      <svg class="city-balloon" width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3700" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3700" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="16.0" cy="41.0" rx="6.864000000000001" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3700)"/>
+  <!-- balloon body -->
+  <ellipse cx="16.0" cy="19.5" rx="12.48" ry="17.5" fill="url(#rg3700)"/>
+  <!-- specular highlight -->
+  <ellipse cx="13.7536" cy="14.6" rx="2.7456" ry="2.625" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="12.0064" cy="12.15" rx="1.2480000000000002" ry="1.225" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M14.0,37.0 Q16.0,42.0 18.0,37.0 Q17.0,40.0 15.0,40.0 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M16.0,41.0 Q12.0,44.5 18.0,48.0 Q21.0,51.0 16.0,49" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="city-num">01</div>
+      <div class="city-name">Dallas</div>
+      <div class="city-state">Texas, EUA</div>
+      <span class="city-badge new-city">Recém chegamos</span>
+    </div>
+    <!-- New York -->
+    <div class="city-card">
+      <svg class="city-balloon" width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3700" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3700" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="16.0" cy="41.0" rx="6.864000000000001" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3700)"/>
+  <!-- balloon body -->
+  <ellipse cx="16.0" cy="19.5" rx="12.48" ry="17.5" fill="url(#rg3700)"/>
+  <!-- specular highlight -->
+  <ellipse cx="13.7536" cy="14.6" rx="2.7456" ry="2.625" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="12.0064" cy="12.15" rx="1.2480000000000002" ry="1.225" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M14.0,37.0 Q16.0,42.0 18.0,37.0 Q17.0,40.0 15.0,40.0 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M16.0,41.0 Q12.0,44.5 18.0,48.0 Q21.0,51.0 16.0,49" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="city-num">02</div>
+      <div class="city-name">New York</div>
+      <div class="city-state">New York, EUA · +500k brasileiros</div>
+      <span class="city-badge active">Parceiro ativo</span>
+    </div>
+    <!-- New Jersey -->
+    <div class="city-card">
+      <svg class="city-balloon" width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3700" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3700" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="16.0" cy="41.0" rx="6.864000000000001" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3700)"/>
+  <!-- balloon body -->
+  <ellipse cx="16.0" cy="19.5" rx="12.48" ry="17.5" fill="url(#rg3700)"/>
+  <!-- specular highlight -->
+  <ellipse cx="13.7536" cy="14.6" rx="2.7456" ry="2.625" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="12.0064" cy="12.15" rx="1.2480000000000002" ry="1.225" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M14.0,37.0 Q16.0,42.0 18.0,37.0 Q17.0,40.0 15.0,40.0 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M16.0,41.0 Q12.0,44.5 18.0,48.0 Q21.0,51.0 16.0,49" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="city-num">03</div>
+      <div class="city-name">New Jersey</div>
+      <div class="city-state">New Jersey, EUA · East Newark</div>
+      <span class="city-badge active">Parceiro ativo</span>
+    </div>
+    <!-- Orlando -->
+    <div class="city-card">
+      <svg class="city-balloon" width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3700" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3700" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="16.0" cy="41.0" rx="6.864000000000001" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3700)"/>
+  <!-- balloon body -->
+  <ellipse cx="16.0" cy="19.5" rx="12.48" ry="17.5" fill="url(#rg3700)"/>
+  <!-- specular highlight -->
+  <ellipse cx="13.7536" cy="14.6" rx="2.7456" ry="2.625" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="12.0064" cy="12.15" rx="1.2480000000000002" ry="1.225" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M14.0,37.0 Q16.0,42.0 18.0,37.0 Q17.0,40.0 15.0,40.0 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M16.0,41.0 Q12.0,44.5 18.0,48.0 Q21.0,51.0 16.0,49" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="city-num">04</div>
+      <div class="city-name">Orlando</div>
+      <div class="city-state">Florida, EUA</div>
+      <span class="city-badge active">Parceiro ativo</span>
+    </div>
+    <!-- Miami -->
+    <div class="city-card">
+      <svg class="city-balloon" width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3700" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3700" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="16.0" cy="41.0" rx="6.864000000000001" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3700)"/>
+  <!-- balloon body -->
+  <ellipse cx="16.0" cy="19.5" rx="12.48" ry="17.5" fill="url(#rg3700)"/>
+  <!-- specular highlight -->
+  <ellipse cx="13.7536" cy="14.6" rx="2.7456" ry="2.625" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="12.0064" cy="12.15" rx="1.2480000000000002" ry="1.225" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M14.0,37.0 Q16.0,42.0 18.0,37.0 Q17.0,40.0 15.0,40.0 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M16.0,41.0 Q12.0,44.5 18.0,48.0 Q21.0,51.0 16.0,49" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="city-num">05</div>
+      <div class="city-name">Miami</div>
+      <div class="city-state">Florida, EUA · +400k brasileiros</div>
+      <span class="city-badge active">Parceiro ativo</span>
+    </div>
+    <!-- Los Angeles -->
+    <div class="city-card">
+      <svg class="city-balloon" width="32" height="50" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3700" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3700" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="16.0" cy="41.0" rx="6.864000000000001" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3700)"/>
+  <!-- balloon body -->
+  <ellipse cx="16.0" cy="19.5" rx="12.48" ry="17.5" fill="url(#rg3700)"/>
+  <!-- specular highlight -->
+  <ellipse cx="13.7536" cy="14.6" rx="2.7456" ry="2.625" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="12.0064" cy="12.15" rx="1.2480000000000002" ry="1.225" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M14.0,37.0 Q16.0,42.0 18.0,37.0 Q17.0,40.0 15.0,40.0 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M16.0,41.0 Q12.0,44.5 18.0,48.0 Q21.0,51.0 16.0,49" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="city-num">06</div>
+      <div class="city-name">Los Angeles</div>
+      <div class="city-state">California, EUA</div>
+      <span class="city-badge active">Parceiro ativo</span>
+    </div>
+  </div>
+
+  <!-- Em breve -->
+  <div class="cities-soon">
+    <div class="soon-label">Em breve</div>
+    <div class="soon-cities">
+      <div class="soon-city">
+        <svg class="soon-city-balloon" width="28" height="34" viewBox="0 0 28 34" fill="none"><ellipse cx="14" cy="13" rx="10" ry="12" fill="rgba(42,122,181,0.4)" stroke="rgba(42,122,181,0.6)" stroke-width="0.7"/><ellipse cx="7" cy="17" rx="7" ry="8.5" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.7"/><ellipse cx="21" cy="17" rx="7" ry="8.5" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.7"/><line x1="14" y1="25" x2="14" y2="33" stroke="rgba(255,255,255,0.2)" stroke-width="0.7"/></svg>
+        <div class="soon-city-name">Chicago</div>
+        <div class="soon-city-tag">Illinois, EUA</div>
+      </div>
+      <div class="soon-city">
+        <svg class="soon-city-balloon" width="28" height="34" viewBox="0 0 28 34" fill="none"><ellipse cx="14" cy="13" rx="10" ry="12" fill="rgba(42,122,181,0.4)" stroke="rgba(42,122,181,0.6)" stroke-width="0.7"/><ellipse cx="7" cy="17" rx="7" ry="8.5" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.7"/><ellipse cx="21" cy="17" rx="7" ry="8.5" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.7"/><line x1="14" y1="25" x2="14" y2="33" stroke="rgba(255,255,255,0.2)" stroke-width="0.7"/></svg>
+        <div class="soon-city-name">Houston</div>
+        <div class="soon-city-tag">Texas, EUA</div>
+      </div>
+      <div class="soon-city">
+        <svg class="soon-city-balloon" width="28" height="34" viewBox="0 0 28 34" fill="none"><ellipse cx="14" cy="13" rx="10" ry="12" fill="rgba(42,122,181,0.4)" stroke="rgba(42,122,181,0.6)" stroke-width="0.7"/><ellipse cx="7" cy="17" rx="7" ry="8.5" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.7"/><ellipse cx="21" cy="17" rx="7" ry="8.5" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.7"/><line x1="14" y1="25" x2="14" y2="33" stroke="rgba(255,255,255,0.2)" stroke-width="0.7"/></svg>
+        <div class="soon-city-name">Delaware</div>
+        <div class="soon-city-tag">Delaware, EUA</div>
+      </div>
+      <div class="soon-city">
+        <svg class="soon-city-balloon" width="28" height="34" viewBox="0 0 28 34" fill="none"><ellipse cx="14" cy="13" rx="10" ry="12" fill="rgba(42,122,181,0.4)" stroke="rgba(42,122,181,0.6)" stroke-width="0.7"/><ellipse cx="7" cy="17" rx="7" ry="8.5" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.7"/><ellipse cx="21" cy="17" rx="7" ry="8.5" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.7"/><line x1="14" y1="25" x2="14" y2="33" stroke="rgba(255,255,255,0.2)" stroke-width="0.7"/></svg>
+        <div class="soon-city-name">Las Vegas</div>
+        <div class="soon-city-tag">Nevada, EUA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div style="position:absolute;right:3%;top:10%;opacity:0.035;pointer-events:none;">
+    <svg width="160" height="190" viewBox="0 0 160 190" fill="none"><ellipse cx="80" cy="65" rx="55" ry="64" fill="var(--ink)"/><ellipse cx="38" cy="90" rx="38" ry="47" fill="var(--ink)"/><ellipse cx="122" cy="90" rx="38" ry="47" fill="var(--ink)"/></svg>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label reveal" style="color:#888;">O que higienizamos</div>
+  </div>
+  <div class="servicos-grid reveal reveal-delay-1">
+    <div class="servico-item">
+      <div class="servico-num">01</div>
+      <div class="servico-title">Sofás & Poltronas</div>
+      <div class="servico-desc">Tecidos, couro, veludo e microfibra. Remoção profunda de manchas, ácaros e odores com resultado impecável.</div>
+    </div>
+    <div class="servico-item">
+      <div class="servico-num">02</div>
+      <div class="servico-title">Colchões</div>
+      <div class="servico-desc">Higienização completa com sanitização e eliminação de ácaros. Mais saúde e qualidade de sono para toda a família.</div>
+    </div>
+    <div class="servico-item">
+      <div class="servico-num">03</div>
+      <div class="servico-title">Cadeiras & Bancos</div>
+      <div class="servico-desc">Cadeiras de jantar, bancadas e bancos estofados recuperados com cuidado e atenção ao detalhe.</div>
+    </div>
+    <div class="servico-item">
+      <div class="servico-num">04</div>
+      <div class="servico-title">Tapetes & Carpetes</div>
+      <div class="servico-desc">Limpeza profunda a seco ou a vapor, devolvendo cor, textura e frescor aos seus tapetes.</div>
+    </div>
+    <div class="servico-item">
+      <div class="servico-num">05</div>
+      <div class="servico-title">Automóveis</div>
+      <div class="servico-desc">Bancos, teto e porta-malas. Higienização automotiva premium diretamente onde você estiver.</div>
+    </div>
+    <div class="servico-item">
+      <div class="servico-num">06</div>
+      <div class="servico-title">Atendimento em Domicílio</div>
+      <div class="servico-desc">Todos os serviços realizados no seu endereço. Sem transporte, sem complicações, com horários flexíveis.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section id="diferenciais">
+  <div style="position:absolute;right:-30px;bottom:40px;opacity:0.04;pointer-events:none;">
+    <svg width="200" height="240" viewBox="0 0 200 240" fill="none"><ellipse cx="100" cy="82" rx="65" ry="80" fill="#2a7ab5"/><ellipse cx="48" cy="112" rx="45" ry="56" fill="#2a7ab5"/><ellipse cx="152" cy="112" rx="45" ry="56" fill="#2a7ab5"/><line x1="100" y1="162" x2="100" y2="235" stroke="#2a7ab5" stroke-width="3"/></svg>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label reveal">Por que FLYWASH</div>
+  </div>
+  <div class="dif-grid reveal reveal-delay-1">
+    <div class="dif-item">
+      <div class="dif-num">01</div>
+      <div class="dif-title">Atendimento 100% em Português</div>
+      <div class="dif-desc">Do primeiro contato à entrega, toda a comunicação acontece em português. Sem barreiras, sem ruídos, sem intermediários.</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-num">02</div>
+      <div class="dif-title">O Padrão Brasileiro de Cuidado</div>
+      <div class="dif-desc">Quem cresceu no Brasil sabe que limpeza vai além do básico. Nossa rede trabalha com profissionais que compartilham a mesma cultura de capricho.</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-num">03</div>
+      <div class="dif-title">Orçamento Transparente</div>
+      <div class="dif-desc">Solicite pelo WhatsApp e receba o valor antes de qualquer compromisso. Preço fixo, sem cobranças inesperadas, sem surpresas.</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-num">04</div>
+      <div class="dif-title">Parceiros Selecionados</div>
+      <div class="dif-desc">Cada profissional parceiro passa por uma seleção criteriosa. Mais do que técnica, buscamos compromisso com confiança e excelência.</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-num">05</div>
+      <div class="dif-title">Registro Antes e Depois</div>
+      <div class="dif-desc">Registramos o antes e o depois de cada serviço. Você acompanha os resultados com clareza e a certeza de um serviço executado com máximo cuidado.</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-num">06</div>
+      <div class="dif-title">Pagamento só após aprovação</div>
+      <div class="dif-desc">O profissional chega, realiza o serviço e apresenta o resultado. Você só paga quando estiver 100% satisfeito.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section id="processo">
+  <div style="max-width:1100px;margin:0 auto 52px;">
+    <div class="section-label reveal">Como funciona</div>
+  </div>
+  <div class="processo-inner">
+    <div class="processo-step reveal">
+      <div class="step-n">01</div>
+      <div>
+        <div class="step-title">Primeiro contato pelo WhatsApp</div>
+        <div class="step-desc">Descreva o que precisa ser higienizado, informe o endereço e indique sua disponibilidade. A resposta é em português, em minutos.</div>
+      </div>
+    </div>
+    <div class="processo-step reveal reveal-delay-1">
+      <div class="step-n">02</div>
+      <div>
+        <div class="step-title">Orçamento claro e imediato</div>
+        <div class="step-desc">Receba o valor antes de qualquer compromisso. Preço fixo, sem cobrança adicional. Você aprova e agendamos.</div>
+      </div>
+    </div>
+    <div class="processo-step reveal reveal-delay-2">
+      <div class="step-n">03</div>
+      <div>
+        <div class="step-title">Agendamento na sua conveniência</div>
+        <div class="step-desc">Data e horário definidos conforme a sua rotina. Flexibilidade total para encaixar o serviço sem impacto na sua agenda.</div>
+      </div>
+    </div>
+    <div class="processo-step reveal reveal-delay-3">
+      <div class="step-n">04</div>
+      <div>
+        <div class="step-title">Execução e entrega com registro</div>
+        <div class="step-desc">Nosso parceiro chega no horário, realiza o serviço com atenção ao detalhe e apresenta o resultado com fotos. Pagamento somente após a sua aprovação.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGAMENTO -->
+<section id="pagamento">
+  <div style="position:absolute;left:3%;top:50%;transform:translateY(-50%);opacity:0.035;pointer-events:none;">
+    <svg width="140" height="170" viewBox="0 0 140 170" fill="none"><ellipse cx="70" cy="57" rx="48" ry="56" fill="#2a7ab5"/><ellipse cx="33" cy="78" rx="34" ry="42" fill="#2a7ab5"/><ellipse cx="107" cy="78" rx="34" ry="42" fill="#2a7ab5"/><line x1="70" y1="113" x2="70" y2="166" stroke="#2a7ab5" stroke-width="3"/></svg>
+  </div>
+  <div class="pagamento-inner">
+    <div class="pagamento-header reveal">
+      <div class="pagamento-title">Formas de pagamento<br><em>aceitas nos EUA</em></div>
+      <div class="pagamento-sub reveal reveal-delay-1">Aceitamos os métodos mais utilizados pela comunidade brasileira nos Estados Unidos. O valor é combinado previamente — sem surpresas.</div>
+    </div>
+    <div class="payment-row reveal reveal-delay-2">
+      <div class="pay-item">
+        <span class="pay-pop-tag">Mais usado</span>
+        <div class="pay-line"></div>
+        <div class="pay-label">Zelle</div>
+        <div class="pay-desc">Transferência instantânea, sem taxas.</div>
+      </div>
+      <div class="pay-item">
+        <span class="pay-pop-tag">Popular</span>
+        <div class="pay-line"></div>
+        <div class="pay-label">Venmo</div>
+        <div class="pay-desc">Favorito da comunidade brasileira.</div>
+      </div>
+      <div class="pay-item">
+        <div style="height:28px"></div>
+        <div class="pay-line"></div>
+        <div class="pay-label">Cash App</div>
+        <div class="pay-desc">Rápido e aceito em todo o país.</div>
+      </div>
+      <div class="pay-item">
+        <div style="height:28px"></div>
+        <div class="pay-line"></div>
+        <div class="pay-label">Cartão</div>
+        <div class="pay-desc">Crédito e débito, todas as bandeiras.</div>
+      </div>
+      <div class="pay-item">
+        <div style="height:28px"></div>
+        <div class="pay-line"></div>
+        <div class="pay-label">Apple / Google Pay</div>
+        <div class="pay-desc">Pagamento por aproximação.</div>
+      </div>
+      <div class="pay-item">
+        <div style="height:28px"></div>
+        <div class="pay-line"></div>
+        <div class="pay-label">Dinheiro</div>
+        <div class="pay-desc">Cash sempre aceito, sem complicação.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="saudade">
+  <div class="saudade-inner">
+    <div class="reveal">
+      <div class="saudade-quote">
+        Mais do que um serviço.<br>
+        <em>Um elo entre brasileiros</em><br>
+        do mesmo lado do mundo.
+      </div>
+      <p class="saudade-text">
+        Contratar a FLYWASH é também fortalecer a rede de brasileiros que escolheram os Estados Unidos como novo lar. É confiar sua casa a alguém que entende o que você espera — sem precisar explicar.
+      </p>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="testimonials">
+        <div class="testi">
+          <div class="testi-text">"Finalmente encontrei um serviço em que consigo me comunicar sem dificuldade. O resultado foi impecável e o atendimento, exatamente como eu esperava."</div>
+          <div class="testi-author">Ana Paula &nbsp;·&nbsp; Orlando, FL</div>
+        </div>
+        <div class="testi">
+          <div class="testi-text">"Três anos morando aqui e nunca tinha encontrado algo assim. Profissional pontual, caprichoso e honesto. Já indiquei para toda a minha rede."</div>
+          <div class="testi-author">Carlos Roberto &nbsp;·&nbsp; Miami, FL</div>
+        </div>
+        <div class="testi">
+          <div class="testi-text">"Agendei pelo WhatsApp, combinei o valor antes e o serviço foi exatamente o que foi prometido. Simples assim."</div>
+          <div class="testi-author">Fernanda &nbsp;·&nbsp; New York, NY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="contato">
+  <!-- Background balloon watermark -->
+  <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:0.035;pointer-events:none;">
+    <svg width="300" height="360" viewBox="0 0 300 360" fill="none"><ellipse cx="150" cy="123" rx="95" ry="116" fill="#2a7ab5"/><ellipse cx="72" cy="168" rx="65" ry="80" fill="#2a7ab5"/><ellipse cx="228" cy="168" rx="65" ry="80" fill="#2a7ab5"/><line x1="150" y1="239" x2="150" y2="350" stroke="#2a7ab5" stroke-width="4"/><line x1="72" y1="248" x2="150" y2="350" stroke="#2a7ab5" stroke-width="3"/><line x1="228" y1="248" x2="150" y2="350" stroke="#2a7ab5" stroke-width="3"/></svg>
+  </div>
+
+  <div class="cta-rule"></div>
+  <h2 class="cta-title reveal">
+    Solicite seu orçamento.<br>
+    <em>Em português, agora.</em>
+  </h2>
+  <p class="cta-sub reveal reveal-delay-1">
+    Entre em contato pelo WhatsApp e receba uma resposta em minutos.<br>Sem formulários. Sem burocracia.
+  </p>
+
+  <!-- Cities with balloons above each -->
+  <div class="cta-cities reveal reveal-delay-2">
+    <div class="cta-city-block">
+      <svg class="cta-city-balloon" width="28" height="44" viewBox="0 0 28 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3240" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3240" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="14.0" cy="36.8" rx="6.006" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3240)"/>
+  <!-- balloon body -->
+  <ellipse cx="14.0" cy="17.4" rx="10.92" ry="15.399999999999999" fill="url(#rg3240)"/>
+  <!-- specular highlight -->
+  <ellipse cx="12.0344" cy="13.087999999999997" rx="2.4024" ry="2.3099999999999996" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="10.5056" cy="10.931999999999999" rx="1.092" ry="1.078" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M12.0,32.8 Q14.0,37.8 16.0,32.8 Q15.0,35.8 13.0,35.8 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M14.0,36.8 Q10.0,39.4 16.0,42.48 Q19.0,45.12 14.0,43" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="cta-city-name highlight">Dallas</div>
+    </div>
+    <div class="cta-city-block">
+      <svg class="cta-city-balloon" width="28" height="44" viewBox="0 0 28 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3240" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3240" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="14.0" cy="36.8" rx="6.006" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3240)"/>
+  <!-- balloon body -->
+  <ellipse cx="14.0" cy="17.4" rx="10.92" ry="15.399999999999999" fill="url(#rg3240)"/>
+  <!-- specular highlight -->
+  <ellipse cx="12.0344" cy="13.087999999999997" rx="2.4024" ry="2.3099999999999996" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="10.5056" cy="10.931999999999999" rx="1.092" ry="1.078" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M12.0,32.8 Q14.0,37.8 16.0,32.8 Q15.0,35.8 13.0,35.8 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M14.0,36.8 Q10.0,39.4 16.0,42.48 Q19.0,45.12 14.0,43" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="cta-city-name">New York</div>
+    </div>
+    <div class="cta-city-block">
+      <svg class="cta-city-balloon" width="28" height="44" viewBox="0 0 28 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3240" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3240" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="14.0" cy="36.8" rx="6.006" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3240)"/>
+  <!-- balloon body -->
+  <ellipse cx="14.0" cy="17.4" rx="10.92" ry="15.399999999999999" fill="url(#rg3240)"/>
+  <!-- specular highlight -->
+  <ellipse cx="12.0344" cy="13.087999999999997" rx="2.4024" ry="2.3099999999999996" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="10.5056" cy="10.931999999999999" rx="1.092" ry="1.078" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M12.0,32.8 Q14.0,37.8 16.0,32.8 Q15.0,35.8 13.0,35.8 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M14.0,36.8 Q10.0,39.4 16.0,42.48 Q19.0,45.12 14.0,43" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="cta-city-name">New Jersey</div>
+    </div>
+    <div class="cta-city-block">
+      <svg class="cta-city-balloon" width="28" height="44" viewBox="0 0 28 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3240" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3240" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="14.0" cy="36.8" rx="6.006" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3240)"/>
+  <!-- balloon body -->
+  <ellipse cx="14.0" cy="17.4" rx="10.92" ry="15.399999999999999" fill="url(#rg3240)"/>
+  <!-- specular highlight -->
+  <ellipse cx="12.0344" cy="13.087999999999997" rx="2.4024" ry="2.3099999999999996" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="10.5056" cy="10.931999999999999" rx="1.092" ry="1.078" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M12.0,32.8 Q14.0,37.8 16.0,32.8 Q15.0,35.8 13.0,35.8 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M14.0,36.8 Q10.0,39.4 16.0,42.48 Q19.0,45.12 14.0,43" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="cta-city-name">Orlando</div>
+    </div>
+    <div class="cta-city-block">
+      <svg class="cta-city-balloon" width="28" height="44" viewBox="0 0 28 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3240" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3240" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="14.0" cy="36.8" rx="6.006" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3240)"/>
+  <!-- balloon body -->
+  <ellipse cx="14.0" cy="17.4" rx="10.92" ry="15.399999999999999" fill="url(#rg3240)"/>
+  <!-- specular highlight -->
+  <ellipse cx="12.0344" cy="13.087999999999997" rx="2.4024" ry="2.3099999999999996" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="10.5056" cy="10.931999999999999" rx="1.092" ry="1.078" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M12.0,32.8 Q14.0,37.8 16.0,32.8 Q15.0,35.8 13.0,35.8 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M14.0,36.8 Q10.0,39.4 16.0,42.48 Q19.0,45.12 14.0,43" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="cta-city-name">Miami</div>
+    </div>
+    <div class="cta-city-block">
+      <svg class="cta-city-balloon" width="28" height="44" viewBox="0 0 28 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg3240" cx="38%" cy="30%" r="62%" fx="35%" fy="28%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.55)" stop-opacity="0.9"/>
+      <stop offset="22%" stop-color="#2a7ab5" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#1a5080" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0d2e52" stop-opacity="1"/>
+    </radialGradient>
+    <filter id="blurrg3240" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="14.0" cy="36.8" rx="6.006" ry="3.5" fill="rgba(0,0,0,0.18)" filter="url(#blurrg3240)"/>
+  <!-- balloon body -->
+  <ellipse cx="14.0" cy="17.4" rx="10.92" ry="15.399999999999999" fill="url(#rg3240)"/>
+  <!-- specular highlight -->
+  <ellipse cx="12.0344" cy="13.087999999999997" rx="2.4024" ry="2.3099999999999996" fill="rgba(255,255,255,0.32)"/>
+  <!-- small secondary highlight -->
+  <ellipse cx="10.5056" cy="10.931999999999999" rx="1.092" ry="1.078" fill="rgba(255,255,255,0.55)"/>
+  <!-- knot -->
+  <path d="M12.0,32.8 Q14.0,37.8 16.0,32.8 Q15.0,35.8 13.0,35.8 Z" fill="#1a5fa0" opacity="0.9"/>
+  <!-- string -->
+  <path d="M14.0,36.8 Q10.0,39.4 16.0,42.48 Q19.0,45.12 14.0,43" 
+        stroke="rgba(255,255,255,0.35)" stroke-width="0.8" fill="none"/>
+</svg>
+      <div class="cta-city-name">Los Angeles</div>
+    </div>
+
+    <!-- Em breve cidades -->
+    <div class="cta-city-soon">
+      <svg width="22" height="27" viewBox="0 0 22 27" fill="none"><ellipse cx="11" cy="10" rx="7.5" ry="9" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.6"/><ellipse cx="5.5" cy="13" rx="5" ry="6.5" fill="rgba(42,122,181,0.15)" stroke="rgba(42,122,181,0.28)" stroke-width="0.6"/><ellipse cx="16.5" cy="13" rx="5" ry="6.5" fill="rgba(42,122,181,0.15)" stroke="rgba(42,122,181,0.28)" stroke-width="0.6"/><line x1="11" y1="19" x2="11" y2="26" stroke="rgba(255,255,255,0.15)" stroke-width="0.6"/></svg>
+      <div class="cta-city-name">Chicago</div>
+      <div class="cta-soon-tag">Em breve</div>
+    </div>
+    <div class="cta-city-soon">
+      <svg width="22" height="27" viewBox="0 0 22 27" fill="none"><ellipse cx="11" cy="10" rx="7.5" ry="9" fill="rgba(42,122,181,0.25)" stroke="rgba(42,122,181,0.4)" stroke-width="0.6"/><ellipse cx="5.5" cy="13" rx="5" ry="6.5" fill="rgba(42,122,181,0.15)" stroke="rgba(42,122,181,0.28)" stroke-width="0.6"/><ellipse cx="16.5" cy="13" rx="5" ry="6.5" fill="rgba(42,122,181,0.15)" stroke="rgba(42,122,181,0.28)" stroke-width="0.6"/><line x1="11" y1="19" x2="11" y2="26" stroke="rgba(255,255,255,0.15)" stroke-width="0.6"/></svg>
+      <div class="cta-city-name">Houston</div>
+      <div class="cta-soon-tag">Em breve</div>
+    </div>
+  </div>
+
+  <div class="reveal reveal-delay-3">
+    <a href="https://wa.me/19971086308" class="btn-primary" style="font-size:12px;letter-spacing:4px;padding:18px 56px;">
+      Falar pelo WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">FLY<span>WASH</span><sup style="font-size:7px;opacity:0.45;font-weight:400;letter-spacing:0;">®</sup></div>
+    <div style="font-size:9.5px;color:var(--muted);letter-spacing:2px;margin-top:4px;text-transform:uppercase;">www.flywashxpress.com.br</div>
+  </div>
+  <div class="footer-copy">© 2025 FLYWASH Express. Todos os direitos reservados.</div>
+  <div class="footer-flags">Brasil &nbsp;·&nbsp; Estados Unidos</div>
+</footer>
+
+<script>
+// ── NAV SCROLL ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── PARALLAX BALLOONS ON HERO ──
+const floaters = document.querySelectorAll('.balloon-float');
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  floaters.forEach((b, i) => {
+    const speed = 0.06 + i * 0.015;
+    b.style.transform = `translateY(${sy * speed}px)`;
+  });
+}, { passive: true });
+
+// ── SUBTLE CURSOR GLOW (desktop only) ──
+if (window.innerWidth > 768) {
+  const glow = document.createElement('div');
+  glow.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(42,122,181,0.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0;';
+  document.body.appendChild(glow);
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+    glow.style.opacity = '1';
+  });
+  document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+}
+</script>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/19971086308" target="_blank" id="wa-float" 
+   style="position:fixed;bottom:24px;right:24px;z-index:9999;width:60px;height:60px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(37,211,102,0.5);text-decoration:none;animation:wapulse 2.5s ease-in-out infinite;" 
+   title="Falar no WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white">
+    <path d="M20.52 3.47A11.92 11.92 0 0 0 12 0C5.37 0 0 5.37 0 12c0 2.11.55 4.16 1.6 5.97L0 24l6.22-1.57A11.94 11.94 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.21-3.48-8.53zm-8.52 18.4a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.69.93.99-3.6-.24-.37A9.87 9.87 0 0 1 2.13 12C2.13 6.54 6.54 2.13 12 2.13A9.87 9.87 0 0 1 21.87 12c0 5.46-4.41 9.87-9.87 9.87zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97s-.47-.15-.67.15-.77.97-.94 1.17-.35.22-.65.07a8.16 8.16 0 0 1-2.4-1.48 9.05 9.05 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.6s.3-.35.44-.52.2-.3.3-.5.05-.37-.03-.52-.67-1.62-.92-2.22c-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37s-1.04 1.02-1.04 2.48 1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.19-.57-.34z"/>
+  </svg>
+</a>
+<style>
+@keyframes wapulse {
+  0%,100%{box-shadow:0 4px 24px rgba(37,211,102,0.5)}
+  50%{box-shadow:0 4px 40px rgba(37,211,102,0.85),0 0 0 8px rgba(37,211,102,0.12)}
+}
+</style>
+
+</body>
+</html>
